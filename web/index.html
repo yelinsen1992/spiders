@@ -1,0 +1,111 @@
+<!DOCTYPE html>
+<html lang="zh">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>首页</title>
+  <link rel="stylesheet" href="public/css/style.css">
+  <link rel="stylesheet" href="public/css/font.css">
+  <script src="public/js/jquery-3.4.0.min.js"></script>
+  <script src="public/js/fuc.js"></script>
+</head>
+<body>
+  <div class="app-body">
+    <div class="nav-header">
+      <div class="search-box">
+        <span class="iconfont icon-search">&#xe601;</span>
+        <input type="text" class="text" value="集光物语" placeholder="输入游戏名(必须是完整的游戏名称)"/>
+      </div>
+    </div>
+    <div class="content">
+      <div class="game-box"></div>
+      <div class="progress-show"></div>
+    </div>
+  </div>
+</body>
+<script>
+  $(function(){
+    // 搜索taptap的游戏
+    $('.search-box .icon-search').click(function() {
+      var name = $('.search-box input').val();
+      if (name === '' || name === undefined) {
+        msg('关键字不能为空');
+        return false;
+      }
+      loading('查找数据中...');
+      $.ajax({
+        url: '/gameSearch',
+        dataType: 'json',
+        data: {'name': name},
+        type: 'GET',
+        success:function(data){
+          //请求成功时处理
+          msg('查找完毕')
+          var html = `
+                      <div class="icon">
+                        <img src="${data.obj.iconUrl}"/>
+                      </div>
+                      <div class="text">
+                        <p class="name">${data.obj.gameName}</p>
+                        <p class="rate">${data.obj.gameRate}</p>
+                        <p class="type">${data.obj.gameType}</p>
+                      </div>
+                      <a href="javascript:;" class="get" gameid="${data.obj.gameId}">获取评论</a>`;
+          $('.game-box').html(html);
+          $('.progress-show').html('');
+        },
+        complete:function(){
+          //请求完成的处理
+          loading(false)
+        },
+        error:function(){
+          //请求出错处理
+          msg('出错了！请稍后再试！')
+        }
+      })
+    })
+    // 爬取游戏评论
+    $('.game-box').on('click', '.get', function() {
+      var gameId = $(this).attr('gameid');
+      loading('内容较多，请耐心等待！');
+      creatList();
+      getReview(gameId, 1);
+    })
+    // 评论获取请求
+    function getReview(gameId, page) {
+      $.ajax({
+        url: '/getReview',
+        dataType: 'json',
+        data: {'gameId': gameId, 'page': page},
+        type: 'GET',
+        success:function(data){
+          //请求成功时处理
+          //msg('查找完毕')
+          if (typeof data === 'number') {
+            $('.page').html('第' + (page + 1) + '页评论获取中...')
+            getReview(gameId, data + 1)
+          } else {
+            loading(false);
+            $('.progress-show').append('<a href="' + data.downLink + '" class="download">下载excel表格</a>')
+            $('.page').html('全部评论获取完毕,共' + (data.page * 1 - 1) +'页')
+            msg(data.msg);
+          }
+        },
+        complete:function(){
+          //请求完成的处理
+          //loading(false)
+        },
+        error:function(){
+          //请求出错处理
+          msg('出错了！请稍后再试！')
+        }
+      })
+    }
+    function creatList() {
+      var html = `<div class="tips">评论内容过多，获取速度较慢，请耐心等待，最后生成execel表格，请下载保存，线上不予以保存</div>
+                  <div class="page">第1页评论获取中...</div>`;
+      $('.progress-show').html(html)
+    }
+  })
+</script>
+</html>

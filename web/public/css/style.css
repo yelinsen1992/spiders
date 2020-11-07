@@ -1,0 +1,108 @@
+@charset "utf-8";
+html{font-family:"Microsoft YaHei","Helvetica Neue",Helvetica,sans-serif,Arial,"tahoma";}
+body,div,ul,ol,li,dl,dt,dd,h1,h2,h3,h4,h5,h6,p,a,span,img,button,select,input,video{padding:0; margin:0; list-style:none; vertical-align:middle; outline:none; box-sizing:border-box;}
+body{background:#fff; font:12px "Microsoft YaHei"; color:#666; width:100%; max-width:1920px; margin:0 auto !important; overflow-x:hidden;}
+input,textarea:focus{outline:none;}
+input::-webkit-input-placeholder,input:-ms-input-placeholder,input::-moz-placeholder{color:#999;}
+img{border:none;}
+.clearfix:after{content:""; display:block; clear:both; height:0;}.clearfix{*zoom:1;}
+a{color:#999; text-decoration:none; transition:color 0.3s linear;}
+.m1200{width:1200px; margin:0 auto;}
+.m1200:after{content:''; clear:both; height:0; display:block;}
+
+.app-body{
+  padding-top:50px;
+}
+.nav-header{
+  position:fixed;
+  top:0;
+  left:0;
+  width:100%;
+  background:#14b9c8;
+  padding:10px 0;
+}
+.nav-header .search-box{
+  width:50%;
+  min-width:280px;
+  background:rgba(168,248,255,.2);
+  margin:0 auto;
+  position:relative;
+  border-radius:30px;
+  padding:0 40px;
+}
+.nav-header .search-box input{
+  width:100%;
+  border:none;
+  background:transparent;
+  color:#fff;
+  font-size:14px;
+  height:30px;
+}
+.nav-header .search-box input::placeholder{
+  color:#ace8ed;
+}
+.content .game-box{
+  display:flex;
+  align-items:center;
+  margin:0 auto;
+  padding:15px 20px;
+  background:#f8f8f8;
+}
+.content .game-box .icon{
+  width:70px;
+  height:70px;
+  overflow: hidden;
+  flex:none;
+}
+.content .game-box .icon img{
+  width:100%;
+}
+.content .game-box .text{
+  flex:auto;
+  margin:0 20px;
+}
+.content .game-box .text .name{
+  font-size:18px;
+  color:#333;
+}
+.content .game-box .text .rate{
+  font-size:16px;
+  color:#14b9c8;
+  margin:5px 0;
+}
+.content .game-box .text .type{
+  font-size:14px;
+  color:#999;
+}
+.content .game-box .get{
+  background:#14b9c8;
+  border-radius:3px;
+  padding:8px 15px;
+  flex:none;
+  color:#fff;
+  font-size:14px;
+}
+.progress-show{
+  padding:0 15px;
+}
+.progress-show .tips{
+  font-size:14px;
+  line-height:1.5em;
+  color:#999;
+  padding:10px 0;
+}
+.progress-show .page{
+  font-size:14px;
+  line-height:1.5em;
+  color:#999;
+}
+.progress-show .download{
+  display:table;
+  background:#14b9c8;
+  border-radius:3px;
+  padding:8px 15px;
+  flex:none;
+  color:#fff;
+  font-size:14px;
+  margin-top:30px;
+}
